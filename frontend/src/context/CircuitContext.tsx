@@ -1,4 +1,3 @@
-// src/context/CircuitContext.tsx
 import { useEffect, useState } from 'react';
 import { CircuitSummary } from '../types/circuit';
 import { fetchCircuits } from '../api/api';

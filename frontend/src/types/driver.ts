@@ -1,7 +1,9 @@
 export interface DriverSummary {
-    id: number;
-    name: string;
-    nationality: string;
-    totalRaces: number;
-    podiumFinishes: number;
-  }
+  id: number;
+  driverCode: string;
+  driverNumber: string;
+  name: string;
+  nationality: string;
+  totalRaces: number;
+  podiumFinishes: number;
+}

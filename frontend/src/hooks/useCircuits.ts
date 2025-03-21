@@ -1,4 +1,3 @@
-// src/hooks/useCircuits.ts
 import { useContext } from 'react';
 import { CircuitContext } from '../context/CircuitContextObject';
 
