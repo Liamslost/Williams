@@ -1,11 +1,13 @@
 import CircuitsList from "./components/CircuitsList";
 import DriverList from "./components/DriverList";
 import { Routes, Route, NavLink } from 'react-router-dom';
+import { CircuitProvider } from "./context/CircuitContext";
 
 function App() {
 
 
   return (
+    <CircuitProvider>
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">F1 Dashboard</h1>
       
@@ -30,10 +32,10 @@ function App() {
       <Routes>
         <Route path="/drivers" element={<DriverList />} />
         <Route path="/circuits" element={<CircuitsList />} />
-        {/* Optional: default route */}
         <Route path="*" element={<DriverList />} />
       </Routes>
     </div>
+    </CircuitProvider>
   );
 }
 
