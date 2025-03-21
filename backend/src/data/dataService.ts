@@ -36,35 +36,35 @@ interface DriverStanding {
 
 // Helper to load a JSON file
 function loadJSON<T = any>(fileName: string): T {
-  const filePath = path.join(__dirname, fileName);
+  const filePath = path.join(__dirname, '../data', fileName);
   const raw = fs.readFileSync(filePath, 'utf-8');
   return JSON.parse(raw);
 }
 
-// Get circuits with fastest lap and total races
+// Cached data
+let circuitsCache: any[] | null = null;
+let driversCache: any[] | null = null;
+
 export function getCircuits() {
+  if (circuitsCache) return circuitsCache;
+
   const circuits: Circuit[] = loadJSON('circuits.json');
   const races: Race[] = loadJSON('races.json');
+  const lapTimes: LapTime[] = loadJSON('lap_times.json'); // loads once here
 
-  return circuits.map(circuit => {
+  circuitsCache = circuits.map(circuit => {
     const circuitRaces = races.filter(r => r.circuitId === circuit.circuitId);
     const totalRaces = circuitRaces.length;
 
     let fastestLap = Infinity;
 
-    try {
-      const lapTimes: LapTime[] = loadJSON('lap_times.json');
-
-      circuitRaces.forEach(race => {
-        const laps = lapTimes.filter(lap => lap.raceId === race.raceId);
-        if (laps.length > 0) {
-          const bestLap = Math.min(...laps.map(lap => lap.milliseconds));
-          if (bestLap < fastestLap) fastestLap = bestLap;
-        }
-      });
-    } catch (err) {
-      console.error('Failed to load lap_times.json:', err);
-    }
+    circuitRaces.forEach(race => {
+      const laps = lapTimes.filter(lap => lap.raceId === race.raceId);
+      if (laps.length > 0) {
+        const bestLap = Math.min(...laps.map(lap => lap.milliseconds));
+        if (bestLap < fastestLap) fastestLap = bestLap;
+      }
+    });
 
     return {
       id: circuit.circuitId,
@@ -75,16 +75,18 @@ export function getCircuits() {
       fastestLap: fastestLap === Infinity ? null : fastestLap,
     };
   });
+
+  return circuitsCache;
 }
 
-// Get drivers with total races and podium finishes
 export function getDrivers() {
+  if (driversCache) return driversCache;
+
   const drivers: Driver[] = loadJSON('drivers.json');
   const standings: DriverStanding[] = loadJSON('driver_standings.json');
 
-  return drivers.map(driver => {
+  driversCache = drivers.map(driver => {
     const driverResults = standings.filter(s => s.driverId === driver.driverId);
-
     const totalRaces = new Set(driverResults.map(s => s.raceId)).size;
 
     const podiums = driverResults.filter(s =>
@@ -93,12 +95,14 @@ export function getDrivers() {
 
     return {
       id: driver.driverId,
-      driverCode: `${driver.code}`,
-      driverNumber: `${driver.number}`,
+      driverCode: driver.code,
+      driverNumber: driver.number,
       name: `${driver.forename} ${driver.surname}`,
       nationality: driver.nationality,
       totalRaces,
       podiumFinishes: podiums,
     };
   });
+
+  return driversCache;
 }
