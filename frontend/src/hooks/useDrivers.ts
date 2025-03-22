@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { DriverSummary } from '../types/driver'; 
-import { fetchDrivers } from '../api/api';
+import { useEffect, useState } from "react";
+import { DriverSummary } from "../types/driver";
+import { fetchDrivers } from "../api/api";
 
 export function useDrivers() {
   const [drivers, setDrivers] = useState<DriverSummary[] | null>(null);
@@ -14,8 +14,8 @@ export function useDrivers() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Driver fetch error:', err);
-        setError('Failed to load drivers');
+        console.error("Driver fetch error:", err);
+        setError("Failed to load drivers");
         setLoading(false);
       });
   }, []);

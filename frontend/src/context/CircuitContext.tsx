@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { CircuitSummary } from '../types/circuit';
-import { fetchCircuits } from '../api/api';
-import { CircuitContext } from './CircuitContextObject';
+import { useEffect, useState } from "react";
+import { CircuitSummary } from "../types/circuit";
+import { fetchCircuits } from "../api/api";
+import { CircuitContext } from "./CircuitContextObject";
 
 export function CircuitProvider({ children }: { children: React.ReactNode }) {
   const [circuits, setCircuits] = useState<CircuitSummary[] | null>(null);
@@ -10,12 +10,12 @@ export function CircuitProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchCircuits()
-      .then(data => {
+      .then((data) => {
         setCircuits(data);
         setLoading(false);
       })
-      .catch(error => {
-        setError('Failed to load circuits' + error);
+      .catch((error) => {
+        setError("Failed to load circuits" + error);
         setLoading(false);
       });
   }, []);

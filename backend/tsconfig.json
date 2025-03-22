@@ -10,5 +10,5 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src", "src/data/server.ts", "src/data/dataService.ts"]
+  "include": ["src", "src/data/server.ts", "src/services/dataService.ts"]
 }

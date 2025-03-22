@@ -1,6 +1,5 @@
-// src/context/CircuitContextObject.ts
-import { createContext } from 'react';
-import { CircuitSummary } from '../types/circuit';
+import { createContext } from "react";
+import { CircuitSummary } from "../types/circuit";
 
 export interface CircuitContextType {
   circuits: CircuitSummary[] | null;

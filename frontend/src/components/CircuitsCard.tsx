@@ -24,7 +24,8 @@ export default function CircuitsCard({ circuit }: CircuitCardProps) {
       <div className="bg-[#222] py-4 px-4 rounded-md space-y-4">
         <p className="text-sm flex text-gray-300">
           <FlagIcon className="size-4 text-[#00ffbb] mr-2" />
-          <strong className="text-gray-400 pr-2">Total Races:</strong> {circuit.totalRaces}
+          <strong className="text-gray-400 pr-2">Total Races:</strong>{" "}
+          {circuit.totalRaces}
         </p>
         <p className="text-sm flex text-gray-300">
           <TimerIcon className="size-4 text-[#00ffbb] mr-2" />
