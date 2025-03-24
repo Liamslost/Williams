@@ -1,8 +1,8 @@
 import { getDrivers, getCircuits } from '../services/dataService';
 
 describe('Data Service Functions', () => {
-  it('getDrivers should return driver summaries', () => {
-    const data = getDrivers();
+  it('getDrivers should return driver summaries', async () => {
+    const data = await getDrivers();
     expect(data[0]).toHaveProperty('id');
     expect(data[0]).toHaveProperty('driverCode');
     expect(data[0]).toHaveProperty('driverNumber');
@@ -12,8 +12,8 @@ describe('Data Service Functions', () => {
     expect(data[0]).toHaveProperty('podiumFinishes');
   });
 
-  it('getCircuits should return circuit summaries', () => {
-    const data = getCircuits();
+  it('getCircuits should return circuit summaries', async () => {
+    const data = await getCircuits();
     expect(data[0]).toHaveProperty('id');
     expect(data[0]).toHaveProperty('name');
     expect(data[0]).toHaveProperty('location');
