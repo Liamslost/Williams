@@ -1,12 +1,11 @@
 import app from "./app";
+import { preloadData } from "./services/dataService";
 
 const PORT = process.env.PORT || 3001;
 
-import { getCircuits, getDrivers } from "./services/dataService";
-
-getCircuits();
-getDrivers();
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+preloadData().then(() => {
+  app.listen(PORT, () => {
+    console.log("Data preloaded");
+    console.log(`Server is running on port ${PORT}`);
+  });
 });

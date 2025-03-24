@@ -15,7 +15,7 @@ export default function DriverCard({ driver }: DriverCardProps) {
         </div>
         <div className="w-1/2">
           <h2 className="text-xl text-gray-600 text-right font-bold">
-            {driver.driverCode + driver.driverNumber}
+            {driver.driverCode} {driver.driverNumber}
           </h2>
         </div>
       </div>

@@ -43,10 +43,10 @@ function loadJSON<T = any>(fileName: string): T {
 
 // CACHED DATA
 
-let circuitsCache: any[] | null = null;
-let driversCache: any[] | null = null;
+export let circuitsCache: any[] | null = null;
+export let driversCache: any[] | null = null;
 
-export function getCircuits() {
+export async function getCircuits() {
   if (circuitsCache) return circuitsCache;
 
   const circuits: Circuit[] = loadJSON('circuits.json');
@@ -83,7 +83,7 @@ export function getCircuits() {
   return circuitsCache;
 }
 
-export function getDrivers() {
+export async function getDrivers() {
   if (driversCache) return driversCache;
 
   const drivers: Driver[] = loadJSON('drivers.json');
@@ -108,4 +108,14 @@ export function getDrivers() {
   });
 
   return driversCache;
+}
+
+export async function preloadData() {
+  console.time("drivers");
+  await getDrivers();
+  console.timeEnd("drivers");
+
+  console.time("circuits");
+  await getCircuits();
+  console.timeEnd("circuits");
 }

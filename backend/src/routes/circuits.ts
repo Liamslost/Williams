@@ -3,9 +3,9 @@ import { getCircuits } from "../services/dataService";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const circuits = getCircuits();
+    const circuits = await getCircuits();
     res.status(200).json(circuits);
   } catch (error) {
     console.error("Error fetching circuits:", error);
