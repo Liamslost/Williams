@@ -34,8 +34,26 @@ interface DriverStanding {
   position: string | number;
 }
 
+interface CircuitData {
+  id: number;
+  name: string;
+  location: string;
+  country: string;
+  totalRaces: number;
+  fastestLap: number | null;
+}
+interface DriversData {
+  id: number;
+  driverCode: string | null;
+  driverNumber: string | null;
+  name: string;
+  nationality: string;
+  totalRaces: number;
+  podiumFinishes: number;
+}
 
-function loadJSON<T = any>(fileName: string): T {
+
+function loadJSON<T = CircuitData | DriversData>(fileName: string): T {
   const filePath = path.join(__dirname, '../data', fileName);
   const raw = fs.readFileSync(filePath, 'utf-8');
   return JSON.parse(raw);
@@ -43,8 +61,9 @@ function loadJSON<T = any>(fileName: string): T {
 
 // CACHED DATA
 
-export let circuitsCache: any[] | null = null;
-export let driversCache: any[] | null = null;
+export let circuitsCache: CircuitData[] | null = null;
+
+export let driversCache: DriversData[] | null = null;
 
 export async function getCircuits() {
   if (circuitsCache) return circuitsCache;

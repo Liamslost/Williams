@@ -9,7 +9,7 @@ This project is a full-stack application. It parses and presents Formula 1 stand
 ```bash
 cd backend
 npm install
-nodemon src/server.ts
+npm run dev
 ```
 
 This will start the server on `http://localhost:3001`.
