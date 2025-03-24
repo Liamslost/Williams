@@ -1,4 +1,10 @@
-import { Routes, Route, NavLink, useLocation, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  NavLink,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import CircuitsList from "./components/CircuitsList";
 import DriverList from "./components/DriverList";
 import { CircuitProvider } from "./context/CircuitContext";
@@ -9,31 +15,31 @@ function App() {
   const location = useLocation();
 
   return (
-    <CircuitProvider>
-      <div className="min-h-screen p-4">
-        <nav className="mb-4 gap-4 bg-[#1a1a1a] p-4 rounded-md border border-[#333] flex ">
-          <NavLink
-            to="/drivers"
-            className={({ isActive }) =>
-              isActive
-                ? "text-[#00ffbb] flex bg-[#333] p-3 rounded-md"
-                : "text-gray-600 flex p-3"
-            }
-          >
-            <User2Icon className="mr-2" /> Drivers
-          </NavLink>
-          <NavLink
-            to="/circuits"
-            className={({ isActive }) =>
-              isActive
-                ? "text-[#00ffbb] flex bg-[#333] p-3 rounded-md"
-                : "text-gray-600 flex p-3"
-            }
-          >
-            <MapIcon className="mr-2" /> Circuits
-          </NavLink>
-        </nav>
+    <div className="min-h-screen p-4">
+      <nav className="mb-4 gap-4 bg-[#1a1a1a] p-4 rounded-md border border-[#333] flex ">
+        <NavLink
+          to="/drivers"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#00ffbb] flex bg-[#333] p-3 rounded-md"
+              : "text-gray-600 flex p-3"
+          }
+        >
+          <User2Icon className="mr-2" /> Drivers
+        </NavLink>
+        <NavLink
+          to="/circuits"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#00ffbb] flex bg-[#333] p-3 rounded-md"
+              : "text-gray-600 flex p-3"
+          }
+        >
+          <MapIcon className="mr-2" /> Circuits
+        </NavLink>
+      </nav>
 
+      <CircuitProvider>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
@@ -64,11 +70,10 @@ function App() {
             />
             <Route path="/" element={<Navigate to="/drivers" replace />} />
             <Route path="*" element={<Navigate to="/drivers" replace />} />
-
           </Routes>
         </AnimatePresence>
-      </div>
-    </CircuitProvider>
+      </CircuitProvider>
+    </div>
   );
 }
 

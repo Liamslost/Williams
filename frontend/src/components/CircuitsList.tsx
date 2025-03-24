@@ -23,14 +23,16 @@ export default function CircuitsList() {
       (c) =>
         c.name.toLowerCase().includes(search.toLowerCase()) ||
         c.location.toLowerCase().includes(search.toLowerCase()) ||
-        c.country.toLocaleLowerCase().includes(search.toLowerCase())
+        c.country.toLowerCase().includes(search.toLowerCase())
     );
 
     return filtered.sort((a, b) => {
       switch (sortKey) {
         case "races":
+          // sorts to races desc
           return b.totalRaces - a.totalRaces;
         case "fastestLap":
+          // sorts to fastest lap asc
           return (a.fastestLap ?? Infinity) - (b.fastestLap ?? Infinity);
         case "name":
         default:
@@ -55,8 +57,7 @@ export default function CircuitsList() {
           type="text"
           placeholder="Search circuits..."
           value={search}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value)
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)
           }
           className="bg-[#222] text-gray-400 p-2 border border-[#333] rounded focus:outline-none w-full sm:max-w-xs "
         />
@@ -65,8 +66,7 @@ export default function CircuitsList() {
           <SlidersIcon className="text-gray-400 hidden sm:block" />
           <select
             value={sortKey}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-              setSortKey(e.target.value as SortKey)
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setSortKey(e.target.value as SortKey)
             }
             className="bg-[#222] text-gray-400 p-2 border border-[#333] rounded focus:outline-none sm:max-w-xs "
           >

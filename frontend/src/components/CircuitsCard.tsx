@@ -9,11 +9,11 @@ export default function CircuitsCard({ circuit }: CircuitCardProps) {
   function millisToMinutesAndSeconds(millis: number): string {
     const minutes = Math.floor(millis / 60000);
     const seconds = ((millis % 60000) / 1000);
+    // Format seconds to three decimal places and pad to ensure fixed width (6 characters)
     return `${minutes}:${seconds.toFixed(3).padStart(6, '0')}`;
   }
   return (
     <div
-      key={circuit.id}
       className="bg-[#1a1a1a] p-4 rounded-md border border-[#333]"
     >
       <h2 className="text-xl font-bold text-gray-400 mb-4">{circuit.name}</h2>

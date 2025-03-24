@@ -53,7 +53,7 @@ interface DriversData {
 }
 
 
-function loadJSON<T = CircuitData | DriversData>(fileName: string): T {
+function loadJSON<T = unknown>(fileName: string): T {
   const filePath = path.join(__dirname, '../data', fileName);
   const raw = fs.readFileSync(filePath, 'utf-8');
   return JSON.parse(raw);
