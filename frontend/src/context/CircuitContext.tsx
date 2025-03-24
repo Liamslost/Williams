@@ -14,8 +14,8 @@ export function CircuitProvider({ children }: { children: React.ReactNode }) {
         setCircuits(data);
         setLoading(false);
       })
-      .catch((error) => {
-        setError("Failed to load circuits" + error);
+      .catch(() => {
+        setError("Failed to load circuits");
         setLoading(false);
       });
   }, []);

@@ -1,18 +1,20 @@
 import { useCircuits } from "../hooks/useCircuits";
-
 import { useState, useMemo, ChangeEvent } from "react";
 import { CircuitSummary } from "../types/circuit";
 import CircuitsCard from "./CircuitsCard";
 import { SlidersIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 type SortKey = "name" | "races" | "fastestLap";
 
 export default function CircuitsList() {
   const { circuits, loading, error } = useCircuits();
   const [search, setSearch] = useState<string>("");
-  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [sortKey, setSortKey] = useState<SortKey>("races");
   const [showAll, setShowAll] = useState<boolean>(false);
   const VISIBLE_LIMIT = 9;
+
+  // filters and sorting
 
   const filteredAndSortedCircuits = useMemo((): CircuitSummary[] => {
     if (!circuits) return [];
@@ -20,7 +22,8 @@ export default function CircuitsList() {
     const filtered = circuits.filter(
       (c) =>
         c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.location.toLowerCase().includes(search.toLowerCase())
+        c.location.toLowerCase().includes(search.toLowerCase()) ||
+        c.country.toLocaleLowerCase().includes(search.toLowerCase())
     );
 
     return filtered.sort((a, b) => {
@@ -59,7 +62,7 @@ export default function CircuitsList() {
         />
 
         <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-          <SlidersIcon className="text-gray-400" />
+          <SlidersIcon className="text-gray-400 hidden sm:block" />
           <select
             value={sortKey}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
@@ -86,11 +89,32 @@ export default function CircuitsList() {
       </div>
 
       {/* Circuit Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <motion.div
+        key={sortKey + search}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 },
+          },
+        }}
+      >
         {circuitsToDisplay.map((circuit) => (
-          <CircuitsCard key={circuit.id} circuit={circuit} />
+          <motion.div
+            key={circuit.id}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <CircuitsCard key={circuit.id} circuit={circuit} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

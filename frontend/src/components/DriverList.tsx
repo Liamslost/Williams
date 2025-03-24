@@ -3,19 +3,21 @@ import DriverCard from "./DriverCard";
 import { useState, useMemo, ChangeEvent } from "react";
 import { DriverSummary } from "../types/driver";
 import { SlidersIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 type SortKey = "name" | "podiums" | "races";
 
 export default function DriverList() {
   const { drivers, loading, error } = useDrivers();
   const [search, setSearch] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("name");
+  const [sortKey, setSortKey] = useState<SortKey>("podiums");
   const [showAll, setShowAll] = useState(false);
   const VISIBLE_LIMIT = 9;
 
   const filteredAndSortedDrivers = useMemo((): DriverSummary[] => {
     if (!drivers) return [];
 
+    // filtering and sorting
     const filtered = drivers.filter(
       (driver) =>
         driver.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -41,12 +43,12 @@ export default function DriverList() {
 
   if (loading) return <p>Loading drivers...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!drivers) return <p>No driver data found</p>;;
+  if (!drivers) return <p>No driver data found</p>;
 
   return (
     <div>
       <div className="bg-[#1a1a1a] p-4 rounded-md border border-[#333] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-        {/* Filters */}
+        {/* Filter bar */}
         <input
           type="text"
           placeholder="Search drivers..."
@@ -58,7 +60,7 @@ export default function DriverList() {
         />
 
         <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
-          <SlidersIcon className="text-gray-400" />
+          <SlidersIcon className="text-gray-400 hidden sm:block" />
           <select
             value={sortKey}
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
@@ -80,12 +82,33 @@ export default function DriverList() {
           )}
         </div>
       </div>
+
       {/* Driver Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 ">
+      <motion.div
+        key={sortKey + search}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 },
+          },
+        }}
+      >
         {driversToDisplay.map((driver) => (
-          <DriverCard key={driver.id} driver={driver} />
+          <motion.div
+            key={driver.id}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
+            <DriverCard driver={driver} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

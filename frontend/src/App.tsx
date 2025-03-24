@@ -1,10 +1,13 @@
+import { Routes, Route, NavLink, useLocation, Navigate } from "react-router-dom";
 import CircuitsList from "./components/CircuitsList";
 import DriverList from "./components/DriverList";
-import { Routes, Route, NavLink } from "react-router-dom";
 import { CircuitProvider } from "./context/CircuitContext";
 import { MapIcon, User2Icon } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
+  const location = useLocation();
+
   return (
     <CircuitProvider>
       <div className="min-h-screen p-4">
@@ -31,11 +34,39 @@ function App() {
           </NavLink>
         </nav>
 
-        <Routes>
-          <Route path="/drivers" element={<DriverList />} />
-          <Route path="/circuits" element={<CircuitsList />} />
-          <Route path="*" element={<DriverList />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/drivers"
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <DriverList />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/circuits"
+              element={
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <CircuitsList />
+                </motion.div>
+              }
+            />
+            <Route path="/" element={<Navigate to="/drivers" replace />} />
+            <Route path="*" element={<Navigate to="/drivers" replace />} />
+
+          </Routes>
+        </AnimatePresence>
       </div>
     </CircuitProvider>
   );

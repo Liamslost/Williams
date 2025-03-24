@@ -40,6 +40,18 @@ npm run test
 
 Tests are written using Jest and Supertest.
 
+### Frontend Tests
+
+from the `frontend` directory:
+
+```bash
+npx vitest
+```
+
+when complete: *Press Q* to quit test environment.
+
+Tests are written using Vitest.
+
 ---
 
 ## Features

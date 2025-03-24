@@ -2,8 +2,6 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 import { DriverSummary } from "../types/driver";
 import { CircuitSummary } from "../types/circuit";
 
-// API FETCH
-
 export async function fetchDrivers(): Promise<DriverSummary[]> {
   const res = await fetch(`${API_BASE_URL}/api/drivers`);
   if (!res.ok) throw new Error("Failed to fetch drivers");
