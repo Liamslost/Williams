@@ -70,8 +70,8 @@ export default function CircuitsList() {
             }
             className="bg-[#222] text-gray-400 p-2 border border-[#333] rounded focus:outline-none sm:max-w-xs "
           >
-            <option value="name">Sort by Name (A–Z)</option>
             <option value="races">Sort by Total Races (High–Low)</option>
+            <option value="name">Sort by Name (A–Z)</option>
             <option value="fastestLap">
               Sort by Fastest Lap (Quickest First)
             </option>
